@@ -32,8 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install mkdocs
-          # Если используете тему Material, уберите решетку ниже:
-          # pip install mkdocs-material
+          pip install mkdocs-material  # Включаем тему Material по умолчанию
 
       - name: Build MkDocs Site
         run: |
