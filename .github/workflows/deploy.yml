@@ -3,10 +3,13 @@ name: Deploy MkDocs Site
 on:
   push:
     branches:
-      - main  # Если у вас master, замените на master
+      - main  # Если ветка master, замените на master
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+  actions: write
 
 jobs:
   deploy:
@@ -18,7 +21,7 @@ jobs:
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@://github.com
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Set up Python
         uses: actions/setup-python@v5
