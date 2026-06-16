@@ -21,7 +21,7 @@ hide:
 </div>
 
 <div style="text-align: center;">
-  <img src="assets/my-photo.jpg" alt="Светлана Гайворонская" style="width: 450px; height: 450px; object-fit: cover; border-radius: 16px; box-shadow: var(--md-shadow-z1);" />
+  <img src="assets/my-photo.jpg" alt="Светлана Гайворонская" style="width: 400px; height: 400px; object-fit: cover; border-radius: 16px; box-shadow: var(--md-shadow-z1);" />
 </div>
 
 </div>
