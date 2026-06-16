@@ -3,25 +3,26 @@ name: Deploy MkDocs Site
 on:
   push:
     branches:
-      - main  # Если ветка master, замените на master
+      - main  # Если у вас master, замените на master
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
-  actions: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps: deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,9 +32,21 @@ jobs:
       - name: Install dependencies
         run: |
           pip install mkdocs
-          # Если используете тему Material, сотрите решетку ниже:
+          # Если используете тему Material, уберите решетку ниже:
           # pip install mkdocs-material
 
-      - name: Deploy to GitHub Pages
+      - name: Build MkDocs Site
         run: |
-          mkdocs gh-deploy --force
+          mkdocs build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './site'  # Папка, куда MkDocs собирает готовый HTML
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
