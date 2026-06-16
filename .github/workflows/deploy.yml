@@ -3,7 +3,7 @@ name: Deploy MkDocs Site
 on:
   push:
     branches:
-      - main  # Если ваша ветка называется master, замените на master
+      - main  # Если ветка master, замените на master
 
 permissions:
   contents: write
@@ -11,6 +11,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      # Форсируем использование новой Node24, чтобы обойти ошибку GitHub
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,17 +21,17 @@ jobs:
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git config user.email 41898282+github-actions[bot]@://github.com
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           pip install mkdocs
-          # Если используете красивую тему Material, сотрите решетку в строке ниже:
+          # Если используете тему Material, сотрите решетку ниже:
           # pip install mkdocs-material
 
       - name: Deploy to GitHub Pages
