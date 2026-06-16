@@ -3,7 +3,7 @@ name: Deploy MkDocs Site
 on:
   push:
     branches:
-      - main  # Если ветка master, замените на master
+      - main  # Если у вас master, замените на master
 
 permissions:
   contents: write
@@ -11,9 +11,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      # Форсируем использование новой Node24, чтобы обойти ошибку GitHub
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
